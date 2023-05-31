@@ -142,6 +142,25 @@ public class ComptabiliteManagerImpl implements ComptabiliteManager {
         // vérifier que l'année dans la référence correspond bien à la date de l'écriture, idem pour le code journal...
     
 
+        String reference = pEcritureComptable.getReference();
+
+        if (reference == null || reference.isEmpty()) {
+            throw new FunctionalException("La référence de l'écriture comptable est obligatoire.");
+        }
+
+        String codeJournal = pEcritureComptable.getJournal().getCode();
+        @SuppressWarnings("deprecation")
+		String anneeEcriture = Integer.toString(pEcritureComptable.getDate().getYear());
+        String sequence = pEcritureComptable.getReference().substring(reference.lastIndexOf("/") + 1);
+
+        String referenceAttendue = codeJournal + "-" + anneeEcriture + "/" + sequence;
+
+        if (!reference.equals(referenceAttendue)) {
+            throw new FunctionalException("La référence de l'écriture comptable est invalide. Le format attendu est : XX-AAAA/#####.");
+        }
+
+
+
     
     }
 
