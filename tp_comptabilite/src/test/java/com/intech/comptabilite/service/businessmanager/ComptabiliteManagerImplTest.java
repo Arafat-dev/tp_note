@@ -30,7 +30,7 @@ public class ComptabiliteManagerImplTest {
                                                                                  "Réference1", new BigDecimal(123),
                                                                                  null));
         vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(2),
-                                                                                 "Reference2", null,
+                                                                                 "Réference2", null,
                                                                                  new BigDecimal(123)));
         
       
