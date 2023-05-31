@@ -16,6 +16,7 @@ import jakarta.validation.ValidatorFactory;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import com.intech.comptabilite.model.CompteComptable;
@@ -84,8 +85,51 @@ public class ComptabiliteManagerImpl implements ComptabiliteManager {
                 4.  Enregistrer (insert/update) la valeur de la séquence en persitance
                     (table sequence_ecriture_comptable)
          */
+    	
+    	
+    	
+    	
+    	
+    	 // Récupération de la dernière valeur de la séquence du journal pour l'année de l'écriture
+    	 Integer derniereValeur = null;
+		try {
+			derniereValeur = sequenceEcritureComptableService.getDernierValeurByCodeAndAnnee(pEcritureComptable.getJournal().getCode(),
+			         pEcritureComptable.getDate().getYear());
+		} catch (NotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        // Vérification s'il y a déjà des enregistrements pour le journal et l'année concernée
+        if (derniereValeur == null) {
+            // Aucun enregistrement trouvé, utiliser le numéro 1
+            derniereValeur = 1;
+        } else {
+            // Incrémenter la dernière valeur de la séquence
+            derniereValeur++;
+        }
+
+        // Formatage de la référence de l'écriture comptable
+        String reference = String.format("%s-%d/%05d", pEcritureComptable.getJournal().getCode(),
+                pEcritureComptable.getDate().getYear(), derniereValeur);
+
+        // Mise à jour de la référence de l'écriture comptable
+        pEcritureComptable.setReference(reference);
+
+        // Enregistrement de la valeur de la séquence en persistence
+       
+        /*sequenceEcritureComptableService.upsert(pEcritureComptable.getJournal().getCode(),
+                pEcritureComptable.getDate().getYear(), derniereValeur);
+          */
+    	
     }
 
+    
+   
+
+    
+    
+    
     /**
      * {@inheritDoc}
      */
