@@ -1,5 +1,6 @@
 package com.intech.comptabilite.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,7 +37,7 @@ public class EcritureComptable {
 	private String reference;
 
 	@NotNull
-	private Date date;
+	private LocalDate date;
 
 	@NotNull
 	@Size(min = 1, max = 200)
@@ -75,12 +76,12 @@ public class EcritureComptable {
 		reference = pReference;
 	}
 
-	public Date getDate() {
+	public @NotNull LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(Date pDate) {
-		date = pDate;
+	public void setDate(LocalDate localDate) {
+		date = localDate;
 	}
 
 	public String getLibelle() {
